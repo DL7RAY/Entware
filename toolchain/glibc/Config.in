@@ -2,7 +2,7 @@
 
 choice
 	prompt "Glibc Version" if TOOLCHAINOPTS
-	default GLIBC_USE_VERSION_2_27
+	default GLIBC_USE_VERSION_2_32
 	help
 	  Select the version of glibc you wish to use.
 
@@ -11,6 +11,9 @@ choice
 
 	config GLIBC_USE_VERSION_2_27
 		bool "glibc 2.27"
+
+	config GLIBC_USE_VERSION_2_32
+		bool "glibc 2.32"
 
 	config GLIBC_USE_VERSION_2_33
 		bool "glibc 2.33"

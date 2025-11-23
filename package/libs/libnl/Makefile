@@ -5,6 +5,9 @@
 
 include $(TOPDIR)/rules.mk
 
+# --- Fix: use bison instead of byacc ---
+YACC := bison -y
+
 PKG_NAME:=libnl
 PKG_VERSION:=3.11.0
 PKG_RELEASE:=1
