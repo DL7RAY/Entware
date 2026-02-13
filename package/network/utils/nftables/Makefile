@@ -6,18 +6,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nftables
-PKG_VERSION:=1.1.1
+PKG_VERSION:=1.1.6
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://netfilter.org/projects/$(PKG_NAME)/files
-PKG_HASH:=6358830f3a64f31e39b0ad421d7dadcd240b72343ded48d8ef13b8faf204865a
+PKG_HASH:=372931bda8556b310636a2f9020adc710f9bab66f47efe0ce90bff800ac2530c
 
 PKG_MAINTAINER:=
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=COPYING
 
-PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 
 PKG_BUILD_FLAGS:=lto
@@ -38,7 +37,7 @@ define Package/nftables/Default
   CATEGORY:=Network
   SUBMENU:=Firewall
   TITLE:=nftables userspace utility
-  DEPENDS:=+libnftnl @!LINUX_2_6_36
+  DEPENDS:=+kmod-nft-core +libnftnl
   URL:=http://netfilter.org/projects/nftables/
   PROVIDES:=nftables
 endef
@@ -63,23 +62,23 @@ ifeq ($(BUILD_VARIANT),json)
 endif
 
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/opt/lib $(1)/opt/include
-	$(CP) $(PKG_INSTALL_DIR)/opt/lib/*.so* $(1)/opt/lib/
-	$(CP) $(PKG_INSTALL_DIR)/opt/include/nftables $(1)/opt/include/
-	$(INSTALL_DIR) $(1)/opt/lib/pkgconfig
-	$(CP) $(PKG_INSTALL_DIR)/opt/lib/pkgconfig/libnftables.pc \
-		$(1)/opt/lib/pkgconfig/
+	$(INSTALL_DIR) $(1)/usr/lib $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/*.so* $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/nftables $(1)/usr/include/
+	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/libnftables.pc \
+		$(1)/usr/lib/pkgconfig/
 endef
 
 define Package/nftables/install/Default
-	$(INSTALL_DIR) $(1)/opt/sbin
-	$(CP) $(PKG_INSTALL_DIR)/opt/sbin/nft $(1)/opt/sbin/
-	$(INSTALL_DIR) $(1)/opt/lib
-	$(CP) $(PKG_INSTALL_DIR)/opt/lib/*.so* $(1)/opt/lib/
+	$(INSTALL_DIR) $(1)/usr/sbin
+	$(CP) $(PKG_INSTALL_DIR)/usr/sbin/nft $(1)/usr/sbin/
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/*.so* $(1)/usr/lib/
 endef
 
 Package/nftables-nojson/install = $(Package/nftables/install/Default)
 Package/nftables-json/install = $(Package/nftables/install/Default)
 
-$(eval $(call BuildPackage,nftables-nojson))
-$(eval $(call BuildPackage,nftables-json))
+#$(eval $(call BuildPackage,nftables-nojson))
+#$(eval $(call BuildPackage,nftables-json))
