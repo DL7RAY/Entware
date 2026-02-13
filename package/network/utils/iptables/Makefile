@@ -12,7 +12,12 @@ include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=iptables
 PKG_VERSION:=1.4.21
-PKG_RELEASE:=4
+
+ifndef CONFIG_PACKAGE_opt-ndmsv2
+  PKG_RELEASE:=5
+else
+  PKG_RELEASE:=6
+endif
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://www.netfilter.org/projects/iptables/files \
@@ -41,6 +46,14 @@ define Package/iptables
   CATEGORY:=Network
   SUBMENU:=Firewall
   URL:=https://netfilter.org/
+  ALTERNATIVES:=\
+    200:/opt/bin/iptables-xml:/opt/sbin/xtables-multi \
+    200:/opt/sbin/iptables:/opt/sbin/xtables-multi \
+    200:/opt/sbin/iptables-restore:/opt/sbin/xtables-multi \
+    200:/opt/sbin/iptables-save:/opt/sbin/xtables-multi \
+    200:/opt/sbin/ip6tables:/opt/sbin/xtables-multi \
+    200:/opt/sbin/ip6tables-restore:/opt/sbin/xtables-multi \
+    200:/opt/sbin/ip6tables-save:/opt/sbin/xtables-multi
 ifdef CONFIG_PACKAGE_opt-ndmsv2
   PKGARCH:=$(BOARD)_kn
 endif
@@ -138,14 +151,14 @@ ifndef CONFIG_PACKAGE_opt-ndmsv2
 endif
 
 define Package/iptables/install
-	$(INSTALL_DIR) $(1)/opt/bin
-	$(CP) $(PKG_INSTALL_DIR)/opt/bin/iptables-xml $(1)/opt/bin/
 	$(INSTALL_DIR) $(1)/opt/sbin
-	$(CP) $(PKG_INSTALL_DIR)/opt/sbin/* $(1)/opt/sbin/
+	$(CP) $(PKG_INSTALL_DIR)/opt/sbin/xtables-multi $(1)/opt/sbin/
+	$(INSTALL_DIR) $(1)/opt/lib
+	$(CP) $(PKG_INSTALL_DIR)/opt/lib/libip*tc.so* $(1)/opt/lib/
+	$(CP) $(PKG_BUILD_DIR)/extensions/libiptext{,4,6}.so $(1)/opt/lib/
+	$(CP) $(PKG_INSTALL_DIR)/opt/lib/libxtables.so* $(1)/opt/lib/
 	$(INSTALL_DIR) $(1)/opt/lib/iptables
-	$(CP) $(PKG_INSTALL_DIR)/opt/lib/*.so* $(1)/opt/lib/
-	$(CP) $(PKG_BUILD_DIR)/extensions/*.so $(1)/opt/lib/
-	$(CP) $(PKG_INSTALL_DIR)/opt/lib/iptables/*.so* $(1)/opt/lib/iptables/
+	$(CP) $(PKG_BUILD_DIR)/extensions/libxt_*.so $(1)/opt/lib/iptables/
 endef
 
 $(eval $(call BuildPackage,iptables))
