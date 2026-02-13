@@ -16,7 +16,7 @@ PKG_SOURCE_URL:=https://sourceware.org/$(PKG_NAME)/ftp/$(PKG_VERSION) \
 PKG_HASH:=616099beae24aba11f9b63d86ca6cc8d566d968b802391334c91df54eab416b4
 
 PKG_MAINTAINER:=Luiz Angelo Daros de Luca <luizluca@gmail.com>
-PKG_LICENSE:=GPL-3.0-or-later
+PKG_LICENSE:=GPL-2.0-or-later OR LGPL-3.0-or-later
 PKG_LICENSE_FILES:=COPYING COPYING-GPLV2 COPYING-LGPLV3
 PKG_CPE_ID:=cpe:/a:elfutils_project:elfutils
 
@@ -51,7 +51,6 @@ define Package/libelf
   $(call Package/elfutils/Default)
   DEPENDS:=$(INTL_DEPENDS) +zlib
   TITLE+= (libelf)
-  PROVIDES:=libelf1
 endef
 
 ifeq ($(CONFIG_BUILD_NLS),y)
@@ -89,10 +88,9 @@ TARGET_CFLAGS += \
 	-Wno-format-nonliteral
 
 # XXX Entware specific: GCC-8.x.x (cc1: error: -Werror=use-after-free: no option -Wuse-after-free)
-#ifneq ($(CONFIG_GCC_USE_VERSION_11),y)
-TARGET_CFLAGS += \
-	$(if $(CONFIG_GCC_USE_VERSION_8),,-Wno-error=use-after-free)
-#endif
+ifneq ($(CONFIG_GCC_USE_VERSION_8),y)
+TARGET_CFLAGS += -Wno-error=use-after-free
+endif
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/opt/include
