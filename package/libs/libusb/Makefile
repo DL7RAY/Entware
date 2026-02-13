@@ -13,14 +13,14 @@ PKG_VERSION:=1.0.22
 PKG_RELEASE:=4
 PKG_HASH:=75aeb9d59a4fdb800d329a545c2e6799f732362193b465ea198f2aa275518157
 else
-PKG_VERSION:=1.0.27
+PKG_VERSION:=1.0.29
 PKG_RELEASE:=1
-PKG_HASH:=ffaa41d741a8a3bee244ac8e54a72ea05bf2879663c098c82fc5757853441575
+PKG_HASH:=5977fc950f8d1395ccea9bd48c06b3f808fd3c2c961b44b0c2e6e29fc3a70a85
 endif
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=\
-  https://github.com/libusb/libusb/releases/download/v$(PKG_VERSION) \
-  @SF/$(PKG_NAME)
+PKG_SOURCE_URL:= \
+		https://github.com/libusb/libusb/releases/download/v$(PKG_VERSION) \
+		@SF/$(PKG_NAME)
 
 PKG_MAINTAINER:= Felix Fietkau <nbd@nbd.name>
 PKG_LICENSE:=LGPL-2.1-or-later
