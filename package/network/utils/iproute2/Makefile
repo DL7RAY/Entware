@@ -12,7 +12,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=iproute2
 PKG_VERSION:=4.4.0
-PKG_RELEASE:=10b
+PKG_RELEASE:=11
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=@KERNEL/linux/utils/net/iproute2
