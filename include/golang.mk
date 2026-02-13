@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2016-2024 Entware
+# Copyright (C) 2016-2026 Entware
 
 include $(TOPDIR)/feeds/golang/go_env.mk
 
@@ -27,6 +27,10 @@ GO_BIN_MOD_DOWNLOAD:= \
 GO_BIN_MOD_TIDY:= \
 	$(GO_ENV_COMMON) \
 	$(GO_BIN) mod tidy $(if $(findstring s,$(OPENWRT_VERBOSE)),-v)
+
+GO_BIN_RUN:= \
+	$(GO_ENV_COMMON) \
+	$(GO_BIN) run $(if $(findstring s,$(OPENWRT_VERBOSE)),-v)
 
 # strip bins
 GO_LDFLAG:=-s -w -buildid=
