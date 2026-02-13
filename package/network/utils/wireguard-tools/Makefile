@@ -10,12 +10,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wireguard-tools
 
-PKG_VERSION:=1.0.20210914
-PKG_RELEASE:=4
+PKG_VERSION:=1.0.20250521
+PKG_RELEASE:=1
 
 PKG_SOURCE:=wireguard-tools-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://git.zx2c4.com/wireguard-tools/snapshot/
-PKG_HASH:=97ff31489217bb265b7ae850d3d0f335ab07d2652ba1feec88b734bc96bd05ac
+PKG_HASH:=b6f2628b85b1b23cc06517ec9c74f82d52c4cdbd020f3dd2f00c972a1782950e
 
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=COPYING
@@ -34,7 +34,9 @@ define Package/wireguard-tools
   URL:=https://www.wireguard.com
   MAINTAINER:=Jason A. Donenfeld <Jason@zx2c4.com>
   TITLE:=WireGuard userspace control program (wg)
-  DEPENDS:=+ip @!LINUX_2_6_36
+  DEPENDS:= \
+	  +!BUSYBOX_CONFIG_IP:ip \
+	  +!BUSYBOX_CONFIG_FEATURE_IP_LINK:ip
 endef
 
 define Package/wireguard-tools/description
