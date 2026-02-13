@@ -40,7 +40,7 @@ define Package/iptables
   SECTION:=net
   CATEGORY:=Network
   SUBMENU:=Firewall
-  URL:=http://netfilter.org/
+  URL:=https://netfilter.org/
 ifdef CONFIG_PACKAGE_opt-ndmsv2
   PKGARCH:=$(BOARD)_kn
 endif
