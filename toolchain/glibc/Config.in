@@ -1,7 +1,7 @@
 # Choose glibc version.
 
 choice
-	prompt "Glibc Version" if TOOLCHAINOPTS
+	prompt "Glibc Version" if TOOLCHAINOPTS && LIBC_USE_GLIBC
 	default GLIBC_USE_VERSION_2_32
 	help
 	  Select the version of glibc you wish to use.
