@@ -1,11 +1,15 @@
-commit 12c93f2295216c276f5e7fa47ea79ac1510cd60e (HEAD -> main, origin/master, origin/main, origin/HEAD)
-Author: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Date:   Sun May 18 12:17:30 2025 +0200
+commit 55120e363ef1601e322629dbc1359ae24e8b17c3 (HEAD -> master, origin/master, origin/main, origin/HEAD)
+Author: Jonas Jelonek <jelonek.jonas@gmail.com>
+Date:   Sun Feb 8 16:17:49 2026 +0000
 
-    kernel: modules: define fb-io-fops module
+    realtek: pcs: rtl930x: drop conditional SerDes setup
     
-    Define define fb-io-fops module - Fbdev helpers for framebuffers in I/O memory
-    By creating a hidden module it is possible to load fb_io_fops.ko
-    according to the kernel version.
+    We can now setup most of the modes for RTL930x, recently XSGMII, QSGMII
+    and USXGMII-SX have been added. Thus we don't need a big list of allowed
+    modes anymore in SerDes setup. Drop this without replacement. Other
+    modes are still rejected in other places or will be rejected later with
+    a proper SerDes capability handling.
     
-......
+    Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
+    Link: https://github.com/openwrt/openwrt/pull/21930
+    Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
